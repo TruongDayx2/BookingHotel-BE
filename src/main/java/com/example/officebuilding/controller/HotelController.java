@@ -7,15 +7,50 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
 @CrossOrigin("*")
-@RequestMapping(value = "/api/hotel", produces = "application/json")
+@RequestMapping(value = "/api", produces = "application/json")
 public class HotelController {
     @Autowired
     private IHotelService hotelService;
 
-    @PostMapping
+    @PostMapping("/hotel/create")
     public ResponseEntity<HotelDTO> createNewHotel(@RequestBody HotelDTO hotelDTO){
         return new ResponseEntity<>(hotelService.save(hotelDTO), HttpStatus.OK);
+    }
+
+    @GetMapping("/user/hotel/getAll")
+    public ResponseEntity<List<HotelDTO>> getAllHotel(){
+        return new ResponseEntity<>(hotelService.findAll(),HttpStatus.OK);
+    }
+
+    @GetMapping("/user/hotel/{id}")
+    public ResponseEntity<HotelDTO> getHotelById(@PathVariable Integer id){
+        Optional<HotelDTO> hotel = hotelService.findById(id);
+        return hotel.map(hotelDTO -> {
+            return new ResponseEntity<>(hotelDTO,HttpStatus.OK);
+        }).orElseGet(()->new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @PutMapping("/hotel/{id}")
+    public ResponseEntity<HotelDTO> updateHotel(@PathVariable Integer id, @RequestBody HotelDTO hotelDTO){
+        Optional<HotelDTO> hotelDTOOptional = hotelService.findById(id);
+        return hotelDTOOptional.map(hotelDTO1 -> {
+            hotelDTO.setHotelId(hotelDTO1.getHotelId());
+            HotelDTO updateHotel = hotelService.update(hotelDTO);
+            return new ResponseEntity<>(updateHotel,HttpStatus.OK);
+        }).orElseGet(()->new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @DeleteMapping("/hotel/{id}")
+    public ResponseEntity<HotelDTO> deleteHotel(@PathVariable Integer id){
+        Optional<HotelDTO> hotelDTOOptional = hotelService.findById(id);
+        return hotelDTOOptional.map(hotelDTO -> {
+            hotelService.remove(id);
+            return new ResponseEntity<>(hotelDTO,HttpStatus.OK);
+        }).orElseGet(()->new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }
