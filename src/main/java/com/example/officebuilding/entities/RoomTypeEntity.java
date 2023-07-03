@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 public class RoomTypeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int rtId;
+    private int id;
     private String rtName;
     private String rtDesc;
     private double rtPrice;
@@ -28,8 +28,11 @@ public class RoomTypeEntity {
         updateTime = new Timestamp(System.currentTimeMillis());
     }
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "hotel_id",nullable = false)
+
+//    @OnDelete(action = OnDeleteAction.NO_ACTION)
+//    @JoinColumn(name = "hotel_id",referencedColumnName = "id",nullable = false,foreignKey = @ForeignKey(name = "none"))
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinColumn(name = "hotel_id", referencedColumnName = "id", nullable = true)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private HotelEntity hotel;
 }

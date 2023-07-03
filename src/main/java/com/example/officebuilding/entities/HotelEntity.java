@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class HotelEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer hotelId;
+    private Integer id;
 
     @Column(nullable = false)
     private String hotelName;

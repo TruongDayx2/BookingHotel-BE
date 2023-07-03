@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 
 @Data
 public class RoomTypeDTO {
-    private int rtId;
+    private int id;
     private String rtName;
     private String rtDesc;
     private double rtPrice;

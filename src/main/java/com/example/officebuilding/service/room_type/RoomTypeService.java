@@ -73,7 +73,31 @@ public class RoomTypeService implements IRoomTypeService{
     }
 
     @Override
+    public RoomTypeDTO update(RoomTypeDTO roomTypeDTO){
+        RoomTypeEntity roomTypeEntity = modelMapper.map(roomTypeDTO,RoomTypeEntity.class);
+
+        // Lấy đối tượng HotelEntity từ cơ sở dữ liệu
+        HotelEntity hotelEntity = hotelRepository.findById(roomTypeDTO.getHotelId())
+                .orElseThrow(() -> new NotFoundException("Hotel not found"));
+
+        // Thiết lập đối tượng HotelEntity cho RoomTypeEntity
+        roomTypeEntity.setHotel(hotelEntity);
+
+        RoomTypeEntity updateRoomTypeEntity = roomTypeRepository.save(roomTypeEntity);
+        return modelMapper.map(updateRoomTypeEntity,RoomTypeDTO.class);
+    }
+
+    @Override
     public void remove(Integer id) {
         roomTypeRepository.deleteById(id);
+    }
+
+    @Override
+    public List<RoomTypeDTO> findAllRoomTypeOfHotel(Integer id){
+        List<RoomTypeEntity> roomTypeEntities = roomTypeRepository.getRoomTypeEntitiesByHotel_Id(id);
+        List<RoomTypeDTO> roomTypeDTOs = roomTypeEntities.stream()
+                .map(roomTypeEntity -> modelMapper.map(roomTypeEntity,RoomTypeDTO.class))
+                .collect(Collectors.toList());
+        return roomTypeDTOs;
     }
 }

@@ -39,7 +39,7 @@ public class HotelController {
     public ResponseEntity<HotelDTO> updateHotel(@PathVariable Integer id, @RequestBody HotelDTO hotelDTO){
         Optional<HotelDTO> hotelDTOOptional = hotelService.findById(id);
         return hotelDTOOptional.map(hotelDTO1 -> {
-            hotelDTO.setHotelId(hotelDTO1.getHotelId());
+            hotelDTO.setId(hotelDTO1.getId());
             HotelDTO updateHotel = hotelService.update(hotelDTO);
             return new ResponseEntity<>(updateHotel,HttpStatus.OK);
         }).orElseGet(()->new ResponseEntity<>(HttpStatus.NOT_FOUND));
