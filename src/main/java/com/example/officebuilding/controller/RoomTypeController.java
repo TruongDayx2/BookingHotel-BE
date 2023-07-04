@@ -29,8 +29,8 @@ public class RoomTypeController {
     private RoomTypeDAO roomTypeDAO;
     private static final Logger logger = LoggerFactory.getLogger(RoomTypeController.class);
 
-    @PostMapping("/roomType/{id}")
-    public ResponseEntity<RoomTypeDTO> createNewRoomType(@PathVariable Integer id, @RequestBody RoomTypeDTO roomTypeDTO){
+    @PostMapping("/roomType/create")
+    public ResponseEntity<RoomTypeDTO> createNewRoomType(@RequestBody RoomTypeDTO roomTypeDTO){
         return new ResponseEntity<>(roomTypeService.save(roomTypeDTO), HttpStatus.OK);
     }
 
