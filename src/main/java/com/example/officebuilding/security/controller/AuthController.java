@@ -53,7 +53,7 @@ public class AuthController {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             User currentUser = userService.findByUsername(user.getUsername()).get();
             logger.info("User Sign In. Message - {}", currentUser);
-            return ResponseEntity.ok(new JwtResponse(jwt, currentUser.getId(), userDetails.getUsername(), currentUser.getFullName(),currentUser.getEmail(), userDetails.getAuthorities()));
+            return ResponseEntity.ok(new JwtResponse(jwt, currentUser.getId(), userDetails.getUsername(),currentUser.getEmail(), userDetails.getAuthorities()));
         }
         catch (Exception e){
             System.out.println(e);
@@ -88,7 +88,7 @@ public class AuthController {
             String jwt = jwtService.generateTokenLogin(authentication);
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             User currentUser = userService.findByUsername(user.getUsername()).get();
-            return ResponseEntity.ok(new JwtResponse(jwt, currentUser.getId(), userDetails.getUsername(), currentUser.getFullName(), currentUser.getEmail(), userDetails.getAuthorities()));
+            return ResponseEntity.ok(new JwtResponse(jwt, currentUser.getId(), userDetails.getUsername(), currentUser.getEmail(), userDetails.getAuthorities()));
         }
         catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
