@@ -13,6 +13,7 @@ public class RoomTypeDTO {
     private double rtPrice;
     private int rtBedNum;
     private String rtSize;
+    private String rtImg;
     private Timestamp updateTime;
 
     @JsonProperty("hotelId")

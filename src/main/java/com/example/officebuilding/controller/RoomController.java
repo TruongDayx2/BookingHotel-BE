@@ -40,7 +40,7 @@ public class RoomController {
         return new ResponseEntity<>(roomDTOs, HttpStatus.OK);
     }
 
-    @GetMapping("/room/hotel/{hotelId}/roomtype/{roomTypeId}")
+    @GetMapping("user/room/hotel/{hotelId}/roomtype/{roomTypeId}")
     public ResponseEntity<List<RoomDTO>> getAllRoomsByHotelAndRoomType(
             @PathVariable Integer hotelId,
             @PathVariable Integer roomTypeId
@@ -57,7 +57,7 @@ public class RoomController {
         }).orElseGet(()->new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PutMapping("/room/update/{id}")
+    @PutMapping("user/room/update/{id}")
     public ResponseEntity<RoomDTO> updateRoom(@PathVariable Integer id, @RequestBody RoomDTO roomDTO){
         Optional<RoomDTO> roomDTOOptional = roomService.findById(id);
         return roomDTOOptional.map(roomDTO1 -> {

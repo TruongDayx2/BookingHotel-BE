@@ -18,4 +18,7 @@ public class HotelEntity {
 
     @Column(nullable = false)
     private String hotelAddress;
+
+    private String hotelDesc;
+    private String hotelImg;
 }

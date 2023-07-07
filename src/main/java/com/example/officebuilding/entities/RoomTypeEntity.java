@@ -21,6 +21,7 @@ public class RoomTypeEntity {
     private double rtPrice;
     private int rtBedNum;
     private String rtSize;
+    private String rtImg;
     private Timestamp updateTime;
     @PrePersist
     @PreUpdate

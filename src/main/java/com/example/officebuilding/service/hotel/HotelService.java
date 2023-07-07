@@ -55,4 +55,5 @@ public class HotelService implements IHotelService{
     public void remove(Integer id){
         hotelRepository.deleteById(id);
     }
+
 }

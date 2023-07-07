@@ -134,12 +134,15 @@ public class RoomService implements IRoomService{
         // Kiểm tra xem phòng có tồn tại không
         RoomEntity existingRoom = roomRepository.findById(roomDTO.getId())
                 .orElseThrow(() -> new RoomService.NotFoundException("Room not found"));
-
         // Kiểm tra xem roomNumber đã tồn tại trong hotel chưa
-        boolean roomNumberExists = roomRepository.existsByHotelIdAndRmNumber(roomDTO.getHotelId(), roomDTO.getRmNumber());
-        if (roomNumberExists) {
-            throw new RoomService.RoomNumberExistsException("Room number already exists in the hotel");
+        if (!existingRoom.getRmNumber().equals(roomDTO.getRmNumber())){
+            boolean roomNumberExists = roomRepository.existsByHotelIdAndRmNumber(roomDTO.getHotelId(), roomDTO.getRmNumber());
+            if (roomNumberExists) {
+                throw new RoomService.RoomNumberExistsException("Room number already exists in the hotel");
+            }
         }
+
+
 
         // Kiểm tra xem roomType tồn tại trong hotel hay không
         if (roomDTO.getRoomTypeId() != null) {
