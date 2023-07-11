@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface IOrderService extends IGeneralService<OrderDTO> {
     List<OrderDTO> getOrdersByUserId(Integer id);
+    List<OrderDTO> getOrdersByHotelId(Integer id);
+    OrderDTO update(OrderDTO orderDTO);
 }

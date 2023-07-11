@@ -1,5 +1,6 @@
 package com.example.officebuilding.service.order;
 
+import com.example.officebuilding.dtos.HotelDTO;
 import com.example.officebuilding.dtos.OrderDTO;
 import com.example.officebuilding.dtos.RoomDTO;
 import com.example.officebuilding.entities.HotelEntity;
@@ -57,6 +58,14 @@ public class OrderService implements IOrderService {
     @Override
     public List<OrderDTO> getOrdersByUserId(Integer id){
         List<OrderEntity> orderEntities = orderRepository.findByUserId(id);
+        return orderEntities.stream()
+                .map(orderEntity -> modelMapper.map(orderEntity, OrderDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderDTO> getOrdersByHotelId(Integer id){
+        List<OrderEntity> orderEntities = orderRepository.findByHotelId(id);
         return orderEntities.stream()
                 .map(orderEntity -> modelMapper.map(orderEntity, OrderDTO.class))
                 .collect(Collectors.toList());
@@ -124,5 +133,11 @@ public class OrderService implements IOrderService {
         orderRepository.deleteById(id);
     }
 
+    @Override
+    public OrderDTO update(OrderDTO orderDTO){
+        OrderEntity orderEntity = modelMapper.map(orderDTO,OrderEntity.class);
+        OrderEntity updatedOrderEntity = orderRepository.save(orderEntity);
+        return modelMapper.map(updatedOrderEntity,OrderDTO.class);
+    }
 
 }

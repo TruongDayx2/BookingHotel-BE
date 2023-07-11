@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface IOrderRepository extends JpaRepository<OrderEntity,Integer> {
     List<OrderEntity> findByUserId(Integer userId);
+    List<OrderEntity> findByHotelId(Integer userId);
 }

@@ -42,6 +42,26 @@ public class OrderController {
         return new ResponseEntity<>(orderDTOs,HttpStatus.OK);
     }
 
+    @GetMapping("/order/hotelId/{id}")
+    public ResponseEntity<List<OrderDTO>> getOrderByHotelId(@PathVariable Integer id){
+        logger.error("Unauthorized error. Message - {}", id);
+
+        List<OrderDTO> orderDTOs = orderService.getOrdersByHotelId(id);
+        logger.error("Unauthorized error. Message - {}", orderDTOs);
+
+        return new ResponseEntity<>(orderDTOs,HttpStatus.OK);
+    }
+
+    @PutMapping("/user/order/update/{id}")
+    public ResponseEntity<OrderDTO> updateOrder(@PathVariable Integer id,@RequestBody OrderDTO orderDTO){
+        Optional<OrderDTO> orderDTOOptional = orderService.findById(id);
+        return orderDTOOptional.map(orderDTO1 -> {
+            orderDTO.setId(orderDTO1.getId());
+            OrderDTO updateOrder = orderService.update(orderDTO);
+            return new ResponseEntity<>(updateOrder,HttpStatus.OK);
+        }).orElseGet(()->new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
 //    @GetMapping("/user/order/userId/{id}")
 //    public ResponseEntity<Map<String, Object>> getInfoAndOrderById
 }
